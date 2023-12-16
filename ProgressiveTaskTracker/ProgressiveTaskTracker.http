@@ -1,0 +1,6 @@
+@ProgressiveTaskTracker_HostAddress = http://localhost:5034
+
+GET {{ProgressiveTaskTracker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
