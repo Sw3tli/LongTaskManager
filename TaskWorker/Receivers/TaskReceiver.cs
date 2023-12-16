@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Connections;
-using TaskWorker.Handlers.Interfaces;
+﻿using TaskWorker.Handlers.Interfaces;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
 
 namespace TaskWorker.Receivers
 {
@@ -8,9 +10,9 @@ namespace TaskWorker.Receivers
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly IMessageHandler _messageHandler;
-        private const string QueueName = "task_queue";
+        private const string QueueName = "long-task-queue";
 
-        public RabbitMQReceiver(IMessageHandler messageHandler)
+        public TaskReceiver(IMessageHandler messageHandler)
         {
             _messageHandler = messageHandler;
 
@@ -33,7 +35,7 @@ namespace TaskWorker.Receivers
             _channel.BasicConsume(queue: QueueName, autoAck: false, consumer: consumer);
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _channel.Close();
             _connection.Close();

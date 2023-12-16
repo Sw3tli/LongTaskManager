@@ -15,7 +15,7 @@ namespace TaskWorker.Handlers
                     SimulateLongRunningTask();
                     break;
                 case "taskprogress":
-                    
+                    //TODO
                 default:
                     Console.WriteLine($"Received an unknown message: {message}");
                     break;
